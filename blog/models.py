@@ -1,4 +1,4 @@
-from blog import db
+from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
@@ -14,6 +14,9 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
     likes = db.relationship('Like', backref='user', passive_deletes=True)
 
+    def __repr__(self):
+        return f"User('{self.email}', '{self.firstname}', '{self.lastname}')"
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +26,9 @@ class Post(db.Model):
         'user.id', ondelete="CASCADE"), nullable=False)
     comments = db.relationship('Comment', backref='post', passive_deletes=True)
     likes = db.relationship('Like', backref='post', passive_deletes=True)
+
+    def __repr__(self):
+        return f"Post('{self.text}', '{self.date_created}')"
 
 
 class Comment(db.Model):
@@ -34,6 +40,9 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'post.id', ondelete="CASCADE"), nullable=False)
 
+    def __repr__(self):
+        return f"Comment('{self.text}', '{self.date_created}')"
+
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
@@ -42,4 +51,5 @@ class Like(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'post.id', ondelete="CASCADE"), nullable=False)
 
-db.create_all()
+    def __repr__(self):
+        return f"Like('{self.date_created}')"
