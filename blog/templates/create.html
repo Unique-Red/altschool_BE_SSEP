@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} 
+Create 
+{% endblock %} 
+{% block content %}
+  <form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <textarea class="form-control" name="text" id="text" rows="30"></textarea>
+    </div>
+    <div class="form-group">
+      <input type="file" name="files" class="form-control-file" id="exampleFormControlFile1" multiple>
+    </div>
+    <button type="submit">SUBMIT</button>
+  </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='text') }}
+{% endblock %}

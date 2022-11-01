@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from blog import app, db
-from .models import User
+from .models import User, Post
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_ckeditor import CKEditor
+
+ckeditor = CKEditor()
 
 
 @app.route("/")
@@ -43,3 +47,24 @@ def signup():
         db.session.commit()
         return redirect(url_for("login"))
     return render_template("register.html")
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
+@app.route("/create-post", methods=["GET", "POST"])
+def create_post():
+    if request.method == "POST":
+        text = request.form.get("text")
+        if len(text) < 1:
+            flash("Post is too short!", category="error")
+        else:
+            new_post = Post(text=text, author=current_user.id)
+            db.session.add(new_post)
+            db.session.commit()
+            flash("Post created!", category="success")
+            return redirect(url_for("home"))
+
+    return render_template("create.html")
+
