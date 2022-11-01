@@ -38,14 +38,19 @@ def signup():
         firstname = request.form.get("firstname")
         lastname = request.form.get("lastname")
         password = request.form.get("password")
+
         user = User.query.filter_by(email=email).first()
+
         if user:
             flash("Email address already exists")
             return redirect(url_for("signup"))
+            
         new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='sha256'))
+
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("login"))
+        
     return render_template("register.html")
 
 @app.route("/logout")
@@ -54,6 +59,7 @@ def logout():
     return redirect(url_for("home"))
 
 @app.route("/create-post", methods=["GET", "POST"])
+@login_required
 def create_post():
     if request.method == "POST":
         text = request.form.get("text")
