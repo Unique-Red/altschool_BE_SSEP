@@ -29,7 +29,7 @@ def login():
             flash("Email does not exist.", category="error")
 
         
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -38,20 +38,25 @@ def signup():
         firstname = request.form.get("firstname")
         lastname = request.form.get("lastname")
         password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
 
         user = User.query.filter_by(email=email).first()
 
         if user:
-            flash("Email address already exists")
+            flash("Email address already exists.", category="error")
             return redirect(url_for("signup"))
+        elif password != confirm_password:
+            flash("Passwords don't match", category="error")
+        else:
             
-        new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='sha256'))
+            new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='sha256'))
 
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for("login"))
-        
-    return render_template("register.html")
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for("create_post"))
+            
+    return render_template("register.html", user=current_user)
 
 @app.route("/logout")
 def logout():
@@ -72,5 +77,5 @@ def create_post():
             flash("Post created!", category="success")
             return redirect(url_for("home"))
 
-    return render_template("create.html")
+    return render_template("create.html", user=current_user)
 
