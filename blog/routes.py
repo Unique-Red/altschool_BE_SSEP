@@ -10,7 +10,8 @@ ckeditor = CKEditor()
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    posts = Post.query.order_by(Post.date_created.desc()).all()
+    return render_template("home.html", posts=posts)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -79,3 +80,11 @@ def create_post():
 
     return render_template("create.html", user=current_user)
 
+@app.route("/post/<firstname>")
+def post(firstname):
+    user = User.query.filter_by(firstname=firstname).first()
+    if not user:
+        return render_template("404.html", user=current_user)
+
+    posts = user.posts
+    return render_template("posts.html", user=current_user, posts=posts, firstname=firstname)

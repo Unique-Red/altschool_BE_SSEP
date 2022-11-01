@@ -2,12 +2,27 @@
 {% block title %}
 Home
 {% endblock %}
+{% block header %}
+Home
+{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <h1>Home</h1>
-    <p>Home page</p>
+{% for post in posts %}
+<div class="card text-center">
+  <div class="card-header">
+    <a href="/posts/{{post.user.firstname}}">
+    {{ post.user.firstname }} {{ post.user.lastname }}
+    </a>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">{{post.text|safe}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+  <div class="card-footer text-muted">
+    {{ post.date_created.strftime('%B %d, %Y') }}
   </div>
 </div>
+<br>
+{% endfor %}
 {% endblock %}
