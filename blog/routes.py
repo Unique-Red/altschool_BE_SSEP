@@ -11,7 +11,7 @@ ckeditor = CKEditor()
 @app.route("/")
 def home():
     posts = Post.query.order_by(Post.date_created.desc()).all()
-    return render_template("home.html", posts=posts)
+    return render_template("home.html", posts=posts, user=current_user)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -23,6 +23,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash("Logged in successfully!", category="success")
+                login_user(user, remember=True)
                 return redirect(url_for("home"))
             else:
                 flash("Incorrect password, try again.", category="error")
@@ -84,7 +85,20 @@ def create_post():
 def post(firstname):
     user = User.query.filter_by(firstname=firstname).first()
     if not user:
-        return render_template("404.html", user=current_user)
+        flash("User not found.", category="error")
+        return redirect(url_for("home"))
 
     posts = user.posts
     return render_template("posts.html", user=current_user, posts=posts, firstname=firstname)
+
+@app.route("/delete/<int:id>")
+# @login_required
+def delete(id):
+    post = Post.query.get_or_404(id)
+
+    try:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for("home"))
+    except:
+        flash ("There was a problem deleting that post.", category="error")
