@@ -8,29 +8,56 @@ Home
 
 {% block content %}
 {% for post in posts %}
-<div class="card text-center">
-  <div class="card-header">
-    <a href="/post/{{post.user.firstname}}">
-    {{ post.user.firstname }} {{ post.user.lastname }}
-    </a>
-    <div class="like">
-      <i class="fas fa-heart"></i>
-      <i class="far fa-heart"></i>
-      {% if user.id == post.author %}
-      <a href="/delete/{{post.id}}"><i class="fas fa-trash"></i></a>
-      <a href="/edit/{{post.id}}">edit</a>
-      {% endif %}
+  <div class="card text-center">
+    <div class="card-header">
+      <div class="like">
+        {% if current_user.is_authenticated %}
+          {{ post.likes|length }}
+          {% if user.id in post.likes|map(attribute="author")|list %}
+            <a href="/like/{{post.id}}"><i class="fas fa-heart"></i></a>
+          {% else %}
+            <a href="/like/{{post.id}}"><i class="far fa-heart"></i></a>
+          {% endif %}
+          {% if user.id == post.author %}
+            <a href="/delete/{{post.id}}"><i class="fas fa-trash"></i></a>
+            <a href="/edit/{{post.id}}">edit</a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="/post/{{post.user.firstname}}">
+        {{ post.user.firstname }} {{ post.user.lastname }}
+        </a></h5>
+      <p class="card-text">{{post.text|safe}}</p>
+      {% if current_user.is_authenticated %}
+      <form action="/comment/{{post.id}}" method="post">
+        <input type="text" name="comment" id="comment">
+        <button type="submit">Comment</button>
+      </form>
+        {% if post.comments|length > 1 %}
+          <p>View {{post.comments|length}} Comments</p>
+          {% elif post.comments|length == 1 %}
+          <p>View {{post.comments|length}} Comment</p>
+          {% else %}
+          <p>No Comments</p>
+        {% endif %}
+        {% for comment in post.comments %}
+          <p>{{comment.user.firstname}} {{comment.user.lastname}}: {{comment.text}} {{comment.date_created.strftime('%I:%M%p %B %d, %Y')}}</p>
+          {% if user.id == comment.author or user.id == post.author %}
+          <a href="/delete-comment/{{comment.id}}"><i class="fas fa-trash"></i></a>
+          {% endif %}
+        {% endfor %}
+      
+        {% else %}
+        <a href="{{url_for('login')}}">Login to react to this post</a>
+        {% endif %}
+    </div>
+    <div class="card-footer text-muted">
+      {{ post.date_created.strftime('%B %d, %Y') }}
     </div>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">{{post.text|safe}}</p>
-    <a href="#" class="btn btn-primary">Write a comment</a>
-  </div>
-  <div class="card-footer text-muted">
-    {{ post.date_created.strftime('%B %d, %Y') }}
-  </div>
-</div>
-<br>
+  <br>
 {% endfor %}
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from blog import app, db
-from .models import User, Post
+from .models import User, Post, Like, Comment
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_ckeditor import CKEditor
@@ -114,3 +114,41 @@ def edit(id):
         except:
             flash("There was a problem updating that post.", category="error")
     return render_template("edit.html", post_to_update=post_to_update)
+
+@app.route("/like/<post_id>")
+def like(post_id):
+    like = Like.query.filter_by(post_id=post_id, author=current_user.id).first()
+
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        like = Like(post_id=post_id, author=current_user.id)
+        db.session.add(like)
+        db.session.commit()
+
+    return redirect(url_for("home"))
+
+@app.route("/comment/<post_id>", methods=["POST"])
+def comment(post_id):
+    comment = request.form.get("comment")
+    if len(comment) < 1:
+        flash("Comment is too short!", category="error")
+    else:
+        new_comment = Comment(text=comment, author=current_user.id, post_id=post_id)
+        db.session.add(new_comment)
+        db.session.commit()
+        flash("Comment created!", category="success")
+        return redirect(url_for("home"))
+
+    return render_template("home.html", user=current_user)
+
+@app.route("/delete-comment/<comment_id>")
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+
+    if comment:
+        db.session.delete(comment)
+        db.session.commit()
+        flash("Comment deleted!", category="success")
+        return redirect(url_for("home"))
