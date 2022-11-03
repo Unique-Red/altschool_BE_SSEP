@@ -102,3 +102,15 @@ def delete(id):
         return redirect(url_for("home"))
     except:
         flash ("There was a problem deleting that post.", category="error")
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+    post_to_update = Post.query.get_or_404(id)
+    if request.method == "POST":
+        post_to_update.text = request.form.get("text")
+        try:
+            db.session.commit()
+            return redirect(url_for("home"))
+        except:
+            flash("There was a problem updating that post.", category="error")
+    return render_template("edit.html", post_to_update=post_to_update)

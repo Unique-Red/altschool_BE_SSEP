@@ -18,6 +18,7 @@ Home
       <i class="far fa-heart"></i>
       {% if user.id == post.author %}
       <a href="/delete/{{post.id}}"><i class="fas fa-trash"></i></a>
+      <a href="/edit/{{post.id}}">edit</a>
       {% endif %}
     </div>
   </div>
