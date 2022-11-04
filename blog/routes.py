@@ -17,7 +17,7 @@ def home():
 @app.route("/post/<int:id>")
 def single_post(id):
     posts = Post.query.get_or_404(id)
-    return render_template ("post.html", posts=posts)
+    return render_template ("post.html", posts=posts, user=current_user)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

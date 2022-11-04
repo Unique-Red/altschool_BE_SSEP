@@ -6,14 +6,15 @@ Create
   <form method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title" name="title" placeholder="Enter blog title" maxlength="200">
+      <input type="text" class="form-control" id="title" name="title" placeholder="Give your blog a title" maxlength="200">
     </div>
     <br>
     <div class="form-group">
       <textarea class="form-control" name="text" id="text" rows="30"></textarea>
     </div>
-    <button type="submit">SUBMIT</button>
+    <br>
+    <button type="submit" class="btn btn-danger">SUBMIT</button>
   </form>
-    {{ ckeditor.load() }}
+    {{ ckeditor.load(pkg_type="basic") }}
     {{ ckeditor.config(name='text') }}
 {% endblock %}

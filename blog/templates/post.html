@@ -3,22 +3,53 @@
 {{posts.title}}
 {% endblock %}
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
-<main>
-    <article id="popular-news">
-        <div id="events"> 
-            <h1 align="center" style="text-transform: uppercase;">{{posts.title}}</h1>
-            <i class="far fa-calendar-alt">  {{posts.date_created.strftime('%B %d, %Y')}}</i>
-            <i class="fa-solid fa-ring-diamond">{{ posts.user.firstname }} {{ posts.user.lastname }}</i>
-            
+<div class="single-post"> 
+    <h1 align="center" style="text-transform: uppercase; color: #fff;">{{posts.title}}</h1>
+    <div class="post-info">
+        <span class="post-author">By <a href="/post/{{posts.user.firstname}}">{{posts.user.firstname}} {{posts.user.lastname}}</a></span>
+        <span class="post-date">{{posts.date_created.strftime('%B %d, %Y')}}</span>
+    </div>
+    <div class="post-content">
+        <p>{{posts.text|safe}}</p>
+    </div>
+    <div class="like">
+        {% if current_user.is_authenticated %}
+            {{ posts.likes|length }}
+            {% if user.id in posts.likes|map(attribute="author")|list %}
+                <a href="/like/{{posts.id}}"><i class="fas fa-heart"></i></a>
+            {% else %}
+                <a href="/like/{{posts.id}}"><i class="far fa-heart"></i></a>
+            {% endif %}
+            {% if user.id == posts.author %}
+                <a href="/delete/{{posts.id}}"><i class="fas fa-trash"></i></a>
+                <a href="/edit/{{posts.id}}">Edit</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="comment">
+        {% if current_user.is_authenticated %}
+            {% if posts.comments|length > 1 %}
+                <p align="center">{{posts.comments|length}} Comments</p>
+                {% elif posts.comments|length == 1 %}
+                <p align="center">{{posts.comments|length}} Comment</p>
+                {% else %}
+                <p align="center">Be the first to Comment</p>
+            {% endif %}
+            {% for comment in posts.comments %}
+                <p style="text-align: left;"> <a href="/post/{{comment.user.firstname}}">{{comment.user.firstname}} {{comment.user.lastname}}</a> : {{comment.text}} {{comment.date_created.strftime('%I:%M%p %B %d, %Y')}}
+                    {% if user.id == comment.author or user.id == posts.author %}
+                    <a href="/delete-comment/{{comment.id}}"><i class="fas fa-trash"></i></a>
+                {% endif %}</p>
+                
+            {% endfor %}
             <br>
-            <div style="color: white;">
-              {{ posts.text|safe }}
-            </div>
-            
-            
-        </div>
-    </article>
-</main>
-</form>
+            <form action="/comment/{{posts.id}}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Write comment"  name="comment" id="comment">
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2">Comment</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

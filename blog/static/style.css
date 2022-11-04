@@ -90,10 +90,13 @@ i{
     text-align: right;
 }
 
-.card-title a, .card-header a{
+.card-title a, .card-header a, .card-footer a{
     text-transform: capitalize;
     color:var(--accent-color);
     letter-spacing: 2px;
+}
+.card-text a{
+    text-decoration: underline;
 }
 a, button{
     color:var(--accent-color);
@@ -102,11 +105,38 @@ a:hover, button:hover{
     color: red;
     letter-spacing: 1px;
 }
-.card-body p{
+/* .card-body p{
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;  
+} */
+.post-info{
+    text-align: right;
+    color: aliceblue;
+    font-family: cursive;
+}
+.post-author a{
+    color:var(--accent-color);
+    text-transform: capitalize;
+}
+.post-content{
+    color: #fff;
+    font-family: 'Times New Roman', Times, serif;
+    padding-bottom: 10rem;
+}
+.like, .comment{
+    color: white;
+}
+.like i, .comment i{
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+.btn{
+    width: 100%;
+}
+.like p{
+    color: var(--accent-color);
 }
