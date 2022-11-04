@@ -111,15 +111,17 @@ def delete(id):
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
+    title_to_edit = Post.query.get_or_404(id)
     post_to_update = Post.query.get_or_404(id)
     if request.method == "POST":
+        title_to_edit = request.form.get("title")
         post_to_update.text = request.form.get("text")
         try:
             db.session.commit()
             return redirect(url_for("home"))
         except:
             flash("There was a problem updating that post.", category="error")
-    return render_template("edit.html", post_to_update=post_to_update)
+    return render_template("edit.html", post_to_update=post_to_update, title_to_edit=title_to_edit)
 
 @app.route("/like/<post_id>")
 def like(post_id):
