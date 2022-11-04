@@ -7,15 +7,14 @@ Login
 <form method="post">
     <div class="row">
         <div class="col-12">
-        <h1>Login</h1>
-        <p>Login page</p>
+        <h1 style="color: white;">Login</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
         <div class="form-group">
-            <label for="email">email</label>
-            <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email">
         </div>
         </div>
     </div>
@@ -27,10 +26,13 @@ Login
         </div>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-12">
         <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        <h5 style="color: white; text-align: right;">No Account yet? <a href="{{url_for('signup')}}">Signup</a></h5>
     </div>
+
 </form>
 {% endblock %}

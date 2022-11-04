@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+{{posts.title}}
+{% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+<main>
+    <article id="popular-news">
+        <div id="events"> 
+            <h1 align="center" style="text-transform: uppercase;">{{posts.title}}</h1>
+            <i class="far fa-calendar-alt">  {{posts.date_created.strftime('%B %d, %Y')}}</i>
+            <i class="fa-solid fa-ring-diamond">{{ posts.user.firstname }} {{ posts.user.lastname }}</i>
+            
+            <br>
+            <div style="color: white;">
+              {{ posts.text|safe }}
+            </div>
+            
+            
+        </div>
+    </article>
+</main>
+</form>
+{% endblock %}

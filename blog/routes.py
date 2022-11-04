@@ -14,6 +14,11 @@ def home():
     return render_template("home.html", posts=posts, user=current_user)
 
 
+@app.route("/post/<int:id>")
+def single_post(id):
+    posts = Post.query.get_or_404(id)
+    return render_template ("post.html", posts=posts)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -70,10 +75,11 @@ def logout():
 def create_post():
     if request.method == "POST":
         text = request.form.get("text")
+        title = request.form.get("title")
         if len(text) < 1:
             flash("Post is too short!", category="error")
         else:
-            new_post = Post(text=text, author=current_user.id)
+            new_post = Post(title=title, text=text, author=current_user.id)
             db.session.add(new_post)
             db.session.commit()
             flash("Post created!", category="success")

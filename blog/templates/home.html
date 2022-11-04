@@ -10,6 +10,10 @@ Home
 {% for post in posts %}
   <div class="card text-center">
     <div class="card-header">
+      <h6>Post by:
+      <a href="/post/{{post.user.firstname}}">
+        {{ post.user.firstname }} {{ post.user.lastname }}
+        </a> on {{ post.date_created.strftime('%B %d, %Y') }} </h6>
       <div class="like">
         {% if current_user.is_authenticated %}
           {{ post.likes|length }}
@@ -27,35 +31,37 @@ Home
     </div>
     <div class="card-body">
       <h5 class="card-title">
-        <a href="/post/{{post.user.firstname}}">
-        {{ post.user.firstname }} {{ post.user.lastname }}
-        </a></h5>
+        <a>{{post.title}}</a> 
+      </h5>
       <p class="card-text">{{post.text|safe}}</p>
-      {% if current_user.is_authenticated %}
-      <form action="/comment/{{post.id}}" method="post">
-        <input type="text" name="comment" id="comment">
-        <button type="submit">Comment</button>
-      </form>
-        {% if post.comments|length > 1 %}
-          <p>View {{post.comments|length}} Comments</p>
-          {% elif post.comments|length == 1 %}
-          <p>View {{post.comments|length}} Comment</p>
-          {% else %}
-          <p>No Comments</p>
-        {% endif %}
-        {% for comment in post.comments %}
-          <p>{{comment.user.firstname}} {{comment.user.lastname}}: {{comment.text}} {{comment.date_created.strftime('%I:%M%p %B %d, %Y')}}</p>
-          {% if user.id == comment.author or user.id == post.author %}
-          <a href="/delete-comment/{{comment.id}}"><i class="fas fa-trash"></i></a>
-          {% endif %}
-        {% endfor %}
-      
-        {% else %}
-        <a href="{{url_for('login')}}">Login to react to this post</a>
-        {% endif %}
+      <a href="{{url_for('single_post', id=post.id)}}">Read More</a>
     </div>
     <div class="card-footer text-muted">
-      {{ post.date_created.strftime('%B %d, %Y') }}
+      {% if current_user.is_authenticated %}
+        {% if post.comments|length > 1 %}
+          <p>{{post.comments|length}} Comments</p>
+          {% elif post.comments|length == 1 %}
+          <p>{{post.comments|length}} Comment</p>
+          {% else %}
+          <p>Be the first to Comment</p>
+        {% endif %}
+        {% for comment in post.comments %}
+          <p>{{comment.user.firstname}} {{comment.user.lastname}}: {{comment.text}} {{comment.date_created.strftime('%I:%M%p %B %d, %Y')}}
+            {% if user.id == comment.author or user.id == post.author %}
+            <a href="/delete-comment/{{comment.id}}"><i class="fas fa-trash"></i></a>
+          {% endif %}</p>
+          
+        {% endfor %}
+      <form action="/comment/{{post.id}}" method="post">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Write comment"  name="comment" id="comment">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Comment</button>
+        </div>
+      </form>
+
+      {% else %}
+      <a href="{{url_for('login')}}">Login to react to this post</a>
+      {% endif %}
     </div>
   </div>
   <br>

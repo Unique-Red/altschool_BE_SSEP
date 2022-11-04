@@ -81,3 +81,32 @@ a.nav-ico:hover i{
 i{
     color: var(--accent-color);
 }
+
+.card-header h6{
+    text-align: left;
+}
+
+.card-header .like{
+    text-align: right;
+}
+
+.card-title a, .card-header a{
+    text-transform: capitalize;
+    color:var(--accent-color);
+    letter-spacing: 2px;
+}
+a, button{
+    color:var(--accent-color);
+}
+a:hover, button:hover{
+    color: red;
+    letter-spacing: 1px;
+}
+.card-body p{
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
