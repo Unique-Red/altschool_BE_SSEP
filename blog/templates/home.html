@@ -30,9 +30,9 @@
         <p>
           {{ post.likes|length }} {% if user.id in
           post.likes|map(attribute="author")|list %}
-          <a href="/like/{{post.id}}" id="like1"><i class="fas fa-heart"></i></a>
+          <i class="fas fa-heart"></i>
           {% else %}
-          <a href="/like/{{post.id}}" id='like2'><i class="far fa-heart"></i></a>
+          <i class="far fa-heart"></i>
           {% endif %}
         </p>
           {% if post.comments|length > 1 %}

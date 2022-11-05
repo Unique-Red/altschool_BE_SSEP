@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from blog import app, db
 from .models import User, Post, Like, Comment
 from flask_login import login_user, logout_user, login_required, current_user
@@ -137,7 +137,8 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
 
-    return redirect(url_for("home"))
+    return redirect(url_for("single_post", id=post_id))
+
 
 @app.route("/comment/<post_id>", methods=["POST"])
 @login_required
@@ -150,7 +151,7 @@ def comment(post_id):
         db.session.add(new_comment)
         db.session.commit()
         flash("Comment created!", category="success")
-        return redirect(url_for("home"))
+        return redirect(url_for("single_post", id=post_id))
 
     return render_template("home.html", user=current_user)
 
