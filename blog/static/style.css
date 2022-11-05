@@ -226,6 +226,10 @@ a#name{
     color: #777;
     align-items: center;
 }
+.socials i:hover{
+    color:var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
 .footer-container p {
     color: #777;
     font-weight: 600;
