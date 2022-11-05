@@ -3,6 +3,7 @@
 Create 
 {% endblock %} 
 {% block content %}
+<div class="auth">
   <form method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="title">Title</label>
@@ -15,6 +16,7 @@ Create
     <br>
     <button type="submit" class="btn btn-danger">SUBMIT</button>
   </form>
+</div>
     {{ ckeditor.load(pkg_type="basic") }}
     {{ ckeditor.config(name='text') }}
 {% endblock %}

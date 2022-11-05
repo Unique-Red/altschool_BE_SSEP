@@ -114,7 +114,7 @@ def edit(id):
     title_to_edit = Post.query.get_or_404(id)
     post_to_update = Post.query.get_or_404(id)
     if request.method == "POST":
-        title_to_edit = request.form.get("title")
+        title_to_edit.title = request.form.get("title")
         post_to_update.text = request.form.get("text")
         try:
             db.session.commit()
@@ -160,3 +160,7 @@ def delete_comment(comment_id):
         db.session.commit()
         flash("Comment deleted!", category="success")
         return redirect(url_for("home"))
+
+@app.route("/about")
+def about():
+    return render_template("about.html")

@@ -4,35 +4,36 @@ Login
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    <div class="row">
-        <div class="col-12">
-        <h1 style="color: white;">Login</h1>
+<div class="auth">
+    <form method="post">
+        <div class="row">
+            <div class="col-12">
+            <h1 style="color: white;">Login</h1>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+        <div class="row">
+            <div class="col-12">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+            </div>
+            </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+        <br>
+        <div class="row">
+            <div class="col-12">
+            <button type="submit" class="btn btn-danger">Submit</button>
+            </div>
+            <h5 style="color: white; text-align: right;">No Account yet? <a href="{{url_for('signup')}}">Signup</a></h5>
         </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-12">
-        <button type="submit" class="btn btn-danger">Submit</button>
-        </div>
-        <h5 style="color: white; text-align: right;">No Account yet? <a href="{{url_for('signup')}}">Signup</a></h5>
-    </div>
-
-</form>
+    </form>
+</div>
 {% endblock %}
