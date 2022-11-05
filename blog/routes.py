@@ -29,7 +29,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash("Logged in successfully!", category="success")
                 login_user(user, remember=True)
-                return redirect(url_for("home"))
+                return redirect(url_for("create_post"))
             else:
                 flash("Incorrect password, try again.", category="error")
         else:

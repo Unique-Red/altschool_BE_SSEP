@@ -36,11 +36,11 @@
           {% endif %}
         </p>
           {% if post.comments|length > 1 %}
-          <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
+          <p>{{post.comments|length}} comments</p>
           {% elif post.comments|length == 1 %}
-          <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
+          <p>{{post.comments|length}} comment</p>
           {% else %}
-          <p>0 <i class="fa-regular fa-comment"></i></p>
+          <p>No comments yet</p>
           {% endif %}
       {% else %}
       <a href="{{url_for('login')}}">Login to react/comment</a>

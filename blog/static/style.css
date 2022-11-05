@@ -243,7 +243,7 @@ a#name{
     letter-spacing: 2px;
 }
 .about{
-    height: 60vh;
+    height: 100vh;
     padding: 10px;
 }
 .about .card{
