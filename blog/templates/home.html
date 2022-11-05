@@ -1,8 +1,8 @@
 {% extends "base.html" %} {% block title %} Home {% endblock %} {% block header
-%} Home {% endblock %} {% block content %} {% for post in posts %}
+%}  {% endblock %} {% block content %} {% for post in posts %}
   <div class="col-md-5 col-sm-12 card text-center">
     <div class="card-header">
-      
+  
       
     </div>
     <div class="card-body">
@@ -35,16 +35,15 @@
           <a href="/like/{{post.id}}" id='like2'><i class="far fa-heart"></i></a>
           {% endif %}
         </p>
-        {% if current_user.is_authenticated %} 
-        {% if post.comments|length > 1 %}
-        <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
-        {% elif post.comments|length == 1 %}
-        <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
-        {% else %}
-        <p>0 <i class="fa-regular fa-comment"></i></p>
-        {% endif %}
+          {% if post.comments|length > 1 %}
+          <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
+          {% elif post.comments|length == 1 %}
+          <p>{{post.comments|length}} <i class="fa-solid fa-comment"></i></p>
+          {% else %}
+          <p>0 <i class="fa-regular fa-comment"></i></p>
+          {% endif %}
       {% else %}
-      <a href="{{url_for('login')}}">Login to react to this post</a>
+      <a href="{{url_for('login')}}">Login to react/comment</a>
       {% endif %}
         <h6>
           Post by:
@@ -53,7 +52,6 @@
           </a>
           on {{ post.date_created.strftime('%B %d, %Y') }}
         </h6>
-        {% endif %}
       </div>
       
     </div>

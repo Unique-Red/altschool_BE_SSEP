@@ -98,7 +98,7 @@ def post(firstname):
     return render_template("posts.html", user=current_user, posts=posts, firstname=firstname)
 
 @app.route("/delete/<int:id>")
-# @login_required
+@login_required
 def delete(id):
     post = Post.query.get_or_404(id)
 
@@ -110,6 +110,7 @@ def delete(id):
         flash ("There was a problem deleting that post.", category="error")
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
+@login_required
 def edit(id):
     title_to_edit = Post.query.get_or_404(id)
     post_to_update = Post.query.get_or_404(id)
@@ -124,6 +125,7 @@ def edit(id):
     return render_template("edit.html", post_to_update=post_to_update, title_to_edit=title_to_edit)
 
 @app.route("/like/<post_id>")
+@login_required
 def like(post_id):
     like = Like.query.filter_by(post_id=post_id, author=current_user.id).first()
 
@@ -138,6 +140,7 @@ def like(post_id):
     return redirect(url_for("home"))
 
 @app.route("/comment/<post_id>", methods=["POST"])
+@login_required
 def comment(post_id):
     comment = request.form.get("comment")
     if len(comment) < 1:
@@ -152,6 +155,7 @@ def comment(post_id):
     return render_template("home.html", user=current_user)
 
 @app.route("/delete-comment/<comment_id>")
+@login_required
 def delete_comment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
 
