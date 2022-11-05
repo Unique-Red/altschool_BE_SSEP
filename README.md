@@ -28,10 +28,11 @@ This a blog app for people to freely express themselves.
     git clone https://github.com/Unique-Red/altschool_BE_SSEP.git
 ```
 - Open your cloned folder
-- Create and activate virtual environment with git bash
+- Create virtual environment with git bash
 ```sh
     python -m venv env
 ```
+- Activate virtual environment with git bash
 ```sh
     source env/Scripts/activate
 ```
