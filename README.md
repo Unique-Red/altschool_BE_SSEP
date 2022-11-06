@@ -50,4 +50,4 @@ A blog app that performs the CRUD functions. This a blog app for people to freel
 
 
 - - -
-© 2022 Altschool Africa All Rights Reserved.
+© 2022 Red | Altschool Africa All Rights Reserved.
