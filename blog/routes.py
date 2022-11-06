@@ -145,7 +145,7 @@ def react(post_id):
 def comment(post_id):
     comment = request.form.get("comment")
     if len(comment) < 1:
-        flash("Comment is too short!", category="error")
+        flash("Comment cannot be blank!", category="error")
     else:
         new_comment = Comment(text=comment, author=current_user.id, post_id=post_id)
         db.session.add(new_comment)
@@ -164,7 +164,7 @@ def delete_comment(comment_id):
         db.session.delete(comment)
         db.session.commit()
         flash("Comment deleted!", category="success")
-        return redirect(url_for("home"))
+        return redirect(url_for("single_post", id=comment_id))
 
 @app.route("/about")
 def about():
