@@ -65,13 +65,6 @@ block content %}
     {% if current_user.is_authenticated %}
     <form action="/comment/{{posts.id}}" method="post">
       <div class="input-group mb-3">
-        <!-- <input
-          type="text"
-          class="form-control"
-          placeholder="Write comment"
-          name="comment"
-          id="comment"
-        /> -->
         <textarea name="comment" id="comment" rows="2" style="width: 100%;" placeholder="Write comment"></textarea>
         <br>
         <button class="btn btn-outline-danger" style="padding-top: 10px;" type="submit" id="button-addon2">
