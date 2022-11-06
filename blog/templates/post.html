@@ -16,14 +16,14 @@ block content %}
     <div class="post-content">
       <p>{{posts.text|safe}}</p>
     </div>
-    <div class="like post">
+    <div class="react post">
       {% if current_user.is_authenticated %} 
       <div style="display:flex;">
-          {{ posts.likes|length }} 
-          {% if user.id in posts.likes|map(attribute="author")|list %}
-        <a id="like3" href="/like/{{posts.id}}"><i class="fas fa-heart"></i></a>
+          {{ posts.reacts|length }} 
+          {% if user.id in posts.reacts|map(attribute="author")|list %}
+        <a id="react3" href="/react/{{posts.id}}"><i class="fas fa-heart"></i></a>
         {% else %}
-        <a id="like4" href="/like/{{posts.id}}"><i class="far fa-heart"></i></a>
+        <a id="react4" href="/react/{{posts.id}}"><i class="far fa-heart"></i></a>
         {% endif %} {% if posts.comments|length > 1 %}
         <p align="center">
           {{posts.comments|length}} <i class="fa-solid fa-comment"></i>

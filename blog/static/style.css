@@ -103,7 +103,7 @@ a.nav-ico:hover i{
     text-align: left;
 }
 
-.card-header .like{
+.card-header .react{
     text-align: right;
 }
 
@@ -166,17 +166,17 @@ a#read{
     text-align: justify;
     font-size: 1.4rem;
 }
-.like, .comment{
+.react, .comment{
     color: white;
     margin-top: 2rem;
     
 }
-.like.post{
+.react.post{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.like i, .comment i{
+.react i, .comment i{
     font-size: 1.5rem;
     margin: 0 0.5rem;
     color: var(--accent-color);
@@ -189,7 +189,7 @@ button#button-addon2 {
     margin-bottom: 1rem;
     padding: 1rem;
 }
-.like p{
+.react p{
     color: #f3f3f3;
     display: inline-flex;
     flex-direction: row;

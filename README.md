@@ -1,9 +1,5 @@
 # AltschoolXReddBlogg
-A blog app that performs the CRUD function
-
-
-## Redd Blogg
-This a blog app for people to freely express themselves. 
+A blog app that performs the CRUD functions. This a blog app for people to freely express themselves. 
 
 ## Description
 ### What this project does

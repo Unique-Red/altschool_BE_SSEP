@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from blog import app, db
-from .models import User, Post, Like, Comment
+from .models import User, Post, React, Comment
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_ckeditor import CKEditor
@@ -124,17 +124,17 @@ def edit(id):
             flash("There was a problem updating that post.", category="error")
     return render_template("edit.html", post_to_update=post_to_update, title_to_edit=title_to_edit)
 
-@app.route("/like/<post_id>")
+@app.route("/react/<post_id>")
 @login_required
-def like(post_id):
-    like = Like.query.filter_by(post_id=post_id, author=current_user.id).first()
+def react(post_id):
+    react = React.query.filter_by(post_id=post_id, author=current_user.id).first()
 
-    if like:
-        db.session.delete(like)
+    if react:
+        db.session.delete(react)
         db.session.commit()
     else:
-        like = Like(post_id=post_id, author=current_user.id)
-        db.session.add(like)
+        react = React(post_id=post_id, author=current_user.id)
+        db.session.add(react)
         db.session.commit()
 
     return redirect(url_for("single_post", id=post_id))

@@ -25,11 +25,11 @@
       </p>
 
       {% endfor %}
-      <div class="like">
+      <div class="react">
         {% if current_user.is_authenticated %}
         <p>
-          {{ post.likes|length }} {% if user.id in
-          post.likes|map(attribute="author")|list %}
+          {{ post.reacts|length }} {% if user.id in
+          post.reacts|map(attribute="author")|list %}
           <i class="fas fa-heart"></i>
           {% else %}
           <i class="far fa-heart"></i>
