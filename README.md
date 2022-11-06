@@ -2,10 +2,18 @@
 A blog app that performs the CRUD functions. This a blog app for people to freely express themselves. 
 
 ## Description
-### What this project does
-* Performs CRUD (Create, Read, Update and Delete) functions as requested by Altschool.
-* Enables users to react and comment to posts.
-* Each User can delete their comment and the author of the post can also delete a user's comment.
+### Features
+- Authentication (Login and sign up)
+- Unauthenticated User
+    - Read blog
+- Authenticated User
+    - Read blog
+    - Create a New Blog
+    - Edit Existing blog
+    - React to blogs
+    - Add comment to blogs
+- Author of blog
+    - Deletes comment from any user in their blog
 
 
 ### Technologies Used and Why
